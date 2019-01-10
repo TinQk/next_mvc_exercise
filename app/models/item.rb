@@ -13,7 +13,27 @@
 #
 
 class Item < ApplicationRecord
+
   def price
-    80.00
+    price = 0.0
+    if self.has_discount == false
+      price = self.original_price
+    else
+      price = self.original_price - self.original_price * self.discount_percentage / 100
+    end
+    price = price.to_f.round(2)
+    return price
   end
+
+  def self.average_price
+    sum = 0 #count total prices summed before division
+    n = 0 #count items
+    self.all.each do |item|
+      sum += item.price
+      n += 1
+    end
+    avg = sum/n
+    return avg.to_f
+  end
+
 end
