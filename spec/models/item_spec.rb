@@ -29,23 +29,24 @@ RSpec.describe Item, type: :model do
   end
 
   describe 'Price' do
-
     context 'when the item has a discount' do
       let(:item) { build(:item_with_discount, original_price: 100.00, discount_percentage: 20) }
+
       it { expect(item.has_discount).to eq(true) }
       it { expect(item.price).to eq(80) }
     end
 
     context 'when the item has a discount, price should be original_price - (original_price * discount/100)' do
       let(:item) { build(:item_with_discount) }
+
       it { expect(item.has_discount).to eq(true) }
-      it { expect(item.price).to eq((item.original_price-(item.original_price*item.discount_percentage/100)).round(2)) }
+      it { expect(item.price).to eq((item.original_price - (item.original_price * item.discount_percentage / 100)).round(2)) }
     end
 
     context 'when the item has no discount' do
       let(:item) { build(:item_without_discount) }
+
       it { expect(item.price).to eq(item.original_price) }
     end
-
   end
 end

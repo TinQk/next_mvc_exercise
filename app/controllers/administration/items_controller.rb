@@ -11,11 +11,11 @@ module Administration
       item = Item.find(params[:id])
       discount = params[:item]["discount_percentage"].to_i
       item.discount_percentage = discount
-      if discount > 0 && discount <= 100
-        item.has_discount = true
-      else
-        item.has_discount = false
-      end
+      item.has_discount = if discount.positive? && discount <= 100
+                            true
+                          else
+                            false
+                          end
       item.save
       redirect_to administration_items_path
     end
