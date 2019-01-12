@@ -13,6 +13,9 @@
 #
 
 class Item < ApplicationRecord
+  has_many :category_items, dependent: :destroy
+  has_many :categories, through: :category_items
+
   def price
     price = if has_discount == false
               original_price

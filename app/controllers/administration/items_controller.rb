@@ -7,7 +7,6 @@ module Administration
     end
 
     def update
-      puts "params : #{params}"
       item = Item.find(params[:id])
       discount = params[:item]["discount_percentage"].to_i
       item.discount_percentage = discount
